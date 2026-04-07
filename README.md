@@ -37,3 +37,23 @@ git clone https://github.com/akshatkhatriii/smart-expense-tracker.git
 cd smart-expense-tracker
 pip install flask
 python app.py
+🔮 Future Improvements
+🔐 User authentication (login/signup)
+☁️ Cloud deployment (Render/Railway)
+📊 Advanced analytics dashboard
+📱 Mobile responsiveness
+👨‍💻 Author
+
+Akshat Khatri
+B.Tech CSE | Bennett University
+
+---
+
+# 🔥 STEP 3: ADD SCREENSHOT (BIG IMPACT)
+
+👉 Take screenshot of your app  
+👉 Upload in repo  
+👉 Add in README:
+
+```md
+![App Screenshot](screenshot.png)
