@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: flex;
+            gap: 20px;
+        }
+
+        .grid .card {
+            flex: 1;
+        }
+
+        input, select {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 8px;
+            border: none;
+            background: #334155;
+            color: white;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #3b82f6;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .expense {
+            padding: 10px;
+            border-bottom: 1px solid #334155;
+        }
+
+        a {
+            color: #ef4444;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1> Smart Expense Tracker</h1>
+
+    <!-- Stats -->
+    <div class="grid">
+        <div class="card">
+            <h3>Total</h3>
+            <h2>₹ {{ total }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Entries</h3>
+            <h2>{{ expenses|length }}</h2>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="card">
+        <h3>Add Expense</h3>
+
+        <form action="/add" method="POST">
+            <input type="text" name="title" placeholder="Expense name" required>
+            <input type="number" name="amount" placeholder="Amount" required>
+
+            <select name="category">
+                <option>Food</option>
+                <option>Travel</option>
+                <option>Shopping</option>
+                <option>Bills</option>
+            </select>
+
+            <input type="date" name="date">
+
+            <button>Add</button>
+        </form>
+    </div>
+
+    <!-- Chart -->
+    <div class="card">
+        <h3>Spending Breakdown</h3>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <!-- Expenses -->
+    <div class="card">
+        <h3>Recent Expenses</h3>
+
+        {% for e in expenses %}
+        <div class="expense">
+            <b>{{ e[1] }}</b> — ₹{{ e[2] }}  
+            <br>
+            <small>{{ e[3] }} | {{ e[4] }}</small>
+            <br>
+            <a href="/delete/{{ e[0] }}">Delete</a>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script>
+    const labels = {{ labels|tojson }};
+    const values = {{ values|tojson }};
+
+    new Chart(document.getElementById("chart"), {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>
